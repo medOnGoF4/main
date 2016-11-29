@@ -33,63 +33,65 @@ public class StickyHeaderList extends AppCompatActivity {
     String jsonUrl2="http://api.androidhive.info/contacts/";
     String jsonResponse=null;
     Iterator<String> keys;
-    //FetchJson fetchJson=new FetchJson(jsonUrl2);
+    FetchJson fetchJson=new FetchJson(jsonUrl);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //fetchJson.start();
+        fetchJson.start();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sticky_header_list);
         listView= (StickyListHeadersListView) findViewById(R.id.list);
         //adapter comes here
-        loadJSONFromAsset();
-        ReadJson readJson=new ReadJson();
-        readJson.start();
+        jsonResponse=fetchJson.getJsonResponse();
+        Log.d("Debug",jsonResponse+"/ERROR/");
+//        loadJSONFromAsset();
+//        ReadJson readJson=new ReadJson();
+//        readJson.start();
 
     }
 
-    public String loadJSONFromAsset() {
-        String json = null;
-        try {
-            InputStream is = getApplication().getAssets().open("Contacts.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-    }
-
-    public class ReadJson extends Thread {
-        @Override
-        public void run() {
-            try {
-                JSONObject obj = new JSONObject(loadJSONFromAsset());
-                JSONArray m_jArry = obj.getJSONArray("contacts");
-               Log.d("Debug","Data read from json success");
-                ArrayList<HashMap<String, String>> formList = new ArrayList<HashMap<String, String>>();
-                HashMap<String, String> m_li;
-
-                for (int i = 0; i < m_jArry.length(); i++) {
-                    JSONObject jo_inside = m_jArry.getJSONObject(i);
-//                Log.d("Details-->", jo_inside.getString("formule"));
-//                String formula_value = jo_inside.getString("formule");
-//                String url_value = jo_inside.getString("url");
+//    public String loadJSONFromAsset() {
+//        String json = null;
+//        try {
+//            InputStream is = getApplication().getAssets().open("Contacts.json");
+//            int size = is.available();
+//            byte[] buffer = new byte[size];
+//            is.read(buffer);
+//            is.close();
+//            json = new String(buffer, "UTF-8");
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//            return null;
+//        }
+//        return json;
+//    }
 //
-//                //Add your values in your `ArrayList` as below:
-//                m_li = new HashMap<String, String>();
-//                m_li.put("formule", formula_value);
-//                m_li.put("url", url_value);
+//    public class ReadJson extends Thread {
+//        @Override
+//        public void run() {
+//            try {
+//                JSONObject obj = new JSONObject(loadJSONFromAsset());
+//                JSONArray m_jArry = obj.getJSONArray("contacts");
+//               Log.d("Debug","Data read from json success");
+//                ArrayList<HashMap<String, String>> formList = new ArrayList<HashMap<String, String>>();
+//                HashMap<String, String> m_li;
 //
-//                formList.add(m_li);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//                for (int i = 0; i < m_jArry.length(); i++) {
+//                    JSONObject jo_inside = m_jArry.getJSONObject(i);
+////                Log.d("Details-->", jo_inside.getString("formule"));
+////                String formula_value = jo_inside.getString("formule");
+////                String url_value = jo_inside.getString("url");
+////
+////                //Add your values in your `ArrayList` as below:
+////                m_li = new HashMap<String, String>();
+////                m_li.put("formule", formula_value);
+////                m_li.put("url", url_value);
+////
+////                formList.add(m_li);
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }
